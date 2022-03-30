@@ -4,6 +4,8 @@ pragma solidity 0.8.11;
 /// @title 3 or more out of 5 protectors can change the owner
 // change the inherited addresses
 
+//possible issues? structure of the github folder, wrong version, 
+
 import "farinavito/ProtectSmartcontractChangeable@1.0.0/changingOwner/contracts/changingOwner3of5.sol";
 
 
