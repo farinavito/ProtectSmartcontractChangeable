@@ -14,8 +14,8 @@ addressProtector5 = 6
 numCombo = 0
 
 @pytest.fixture()
-def deploy(ChangingOwner, module_isolation):
-    return ChangingOwner.deploy(accounts[protectorOwner], accounts[addressProtector1], accounts[addressProtector2], accounts[addressProtector3], accounts[addressProtector4], accounts[addressProtector5], {'from': accounts[0]})
+def deploy(ChangingOwnerInherited, module_isolation):
+    return ChangingOwnerInherited.deploy({'from': accounts[0]})
 
 
 '''TESTING INITIALIZATION'''
