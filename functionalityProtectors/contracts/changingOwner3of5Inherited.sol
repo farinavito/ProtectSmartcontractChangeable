@@ -7,7 +7,7 @@ pragma solidity 0.8.11;
 import "farinavito/ProtectSmartcontractChangeable@1.0.0/initializingProtectors/contracts/changingOwner3of5.sol";
 
 
-contract ChangingOwnerInherited is ChangingOwner(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2, 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db, 0x78731D3Ca6b7E34aC0F824c42a7cC18A495cabaB, 0x617F2E2fD72FD9D5503197092aC168c91465E7f2, 0x17F6AD8Ef982297579C203069C1DbfFE4348c372){
+contract ChangingOwnerInherited is ChangingOwner(0x33A4622B82D4c04a53e170c638B944ce27cffce3, 0x0063046686E46Dc6F15918b61AE2B121458534a5, 0x21b42413bA931038f35e7A5224FaDb065d297Ba3, 0x46C0a5326E643E4f71D3149d50B48216e174Ae84, 0x807c47A89F720fe4Ee9b8343c286Fc886f43191b, 0x844ec86426F076647A5362706a04570A5965473B){
     /// @notice Only the smartContractOwner can access
     modifier onlySmartcontractOwner(){
         require(smartcontractOwner == msg.sender, "You are not the owner");

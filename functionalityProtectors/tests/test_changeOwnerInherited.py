@@ -17,10 +17,32 @@ numCombo = 0
 def deploy(ChangingOwnerInherited, module_isolation):
     return ChangingOwnerInherited.deploy({'from': accounts[0]})
 
+@pytest.mark.aaa
+def test_acc1():
+    assert accounts[protectorOwner] == "0x33A4622B82D4c04a53e170c638B944ce27cffce3"
+
+def test_acc3():
+    assert accounts[addressProtector1] == "0x0063046686E46Dc6F15918b61AE2B121458534a5"
+
+def test_acc4():
+    assert accounts[addressProtector2] == "0x21b42413bA931038f35e7A5224FaDb065d297Ba3"
+
+def test_acc5():
+    assert accounts[addressProtector3] == "0x46C0a5326E643E4f71D3149d50B48216e174Ae84"
+
+def test_acc6():
+    assert accounts[addressProtector4] == "0x807c47A89F720fe4Ee9b8343c286Fc886f43191b"
+
+def test_acc7():
+    assert accounts[addressProtector5] == "0x844ec86426F076647A5362706a04570A5965473B"
+
 
 '''TESTING INITIALIZATION'''
 
 
+def test_protectorOwner_address(deploy):
+    '''checking if the smartcontractOwner's address is correct'''
+    assert deploy.smartcontractOwner() == accounts[protectorOwner]
 
 def test_protector1_address(deploy):
     '''checking if the protector's address is correct'''
@@ -63,21 +85,17 @@ def test_alreadyvoted_protector7(deploy):
     assert deploy.alreadyVoted(accounts[protectorOwner], accounts[protectorOwner]) == False
 
 
-def test_smartContractOwner(deploy):
-    '''checking if the smartContractOwner is initialize'''
-    assert deploy.smartContractOwner() == accounts[protectorOwner]
+def test_smartcontractOwner(deploy):
+    '''checking if the smartcontractOwner is initialize'''
+    assert deploy.smartcontractOwner() == accounts[protectorOwner]
 
 @pytest.mark.parametrize("protector",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
-def test_candidatesVotes_initialized_addressProtector(deploy, protector):
+def test_candidates_initialized_addressProtector(deploy, protector):
     '''testing if addressProtector is initialized to 0'''
     assert deploy.candidates(accounts[protector]) == 0
 
-def test_candidatesVotes_initialized_protectorOwnerAddress(deploy):
-    '''testing if protectorOwnerAddress is initialized to 0'''
-    assert deploy.candidatesVotes(accounts[protectorOwner]) == 0
-
-def test_candidates_smartContractOwner_initialized(deploy):
-    '''checking if smartContractOwner has already have 5 votes at initialization'''
+def test_candidates_smartcontractOwner_initialized(deploy):
+    '''checking if smartcontractOwner has already have 5 votes at initialization'''
     assert deploy.candidates(accounts[protectorOwner]) == 5
 
 
@@ -228,7 +246,7 @@ def test_checkWhichProtector_changeOwner_true_part1(deploy, protector, Owner):
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector2]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartContractOwner() == accounts[9]
+    assert deploy.smartcontractOwner() == accounts[9]
 
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 @pytest.mark.parametrize("protector",  [addressProtector1, addressProtector2])
@@ -239,7 +257,7 @@ def test_checkWhichProtector_changeOwner_true_part2(deploy, Owner, protector, pr
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector2]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartContractOwner() == accounts[9]
+    assert deploy.smartcontractOwner() == accounts[9]
 
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 def test_checkWhichProtector_changeOwner_true_part3(deploy, Owner):
@@ -248,7 +266,7 @@ def test_checkWhichProtector_changeOwner_true_part3(deploy, Owner):
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector4]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector5]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartContractOwner() == accounts[9]
+    assert deploy.smartcontractOwner() == accounts[9]
 
 @pytest.mark.parametrize("protector",  [addressProtector3, addressProtector4, addressProtector5])
 @pytest.mark.parametrize("non_protector",  [7, 8, protectorOwner])
@@ -381,7 +399,7 @@ def test_changeowner_success_part1(deploy, Owner, protector):
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector2]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartContractOwner() == accounts[9]
+    assert deploy.smartcontractOwner() == accounts[9]
 
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 @pytest.mark.parametrize("protector",  [addressProtector1, addressProtector2])
@@ -392,7 +410,7 @@ def test_changeowner_success_part2(deploy, Owner, protector, protector2):
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector2]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartContractOwner() == accounts[9]
+    assert deploy.smartcontractOwner() == accounts[9]
 
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 def test_changeowner_success_part3(deploy, Owner):
@@ -401,7 +419,7 @@ def test_changeowner_success_part3(deploy, Owner):
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector4]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector5]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartContractOwner() == accounts[9]
+    assert deploy.smartcontractOwner() == accounts[9]
 
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 @pytest.mark.parametrize("protector",  [addressProtector3, addressProtector4, addressProtector5])
@@ -562,7 +580,7 @@ def test_changeProtector_2nd_require_different_voters_2votes(deploy, combo, oldP
         deploy.changeProtector(accounts[9], accounts[oldProtector], {'from': accounts[combo[1]]})
     except Exception as e:
         assert e.message[50:] == "Not enough protectors agree with this address"
-
+@pytest.mark.skip
 @pytest.mark.parametrize("combo", [[2, 6, 3], [2, 6, 4], [2, 6, 5], [2, 5, 3], [2, 5, 4], [2, 5, 6], [2, 4, 3], [2, 4, 5], [2, 4, 6], [2, 3, 4], [2, 3, 5], [2, 3, 6], [3, 6, 2], [3, 6, 4], [3, 6, 5], [3, 5, 2], [3, 5, 4], [3, 5, 6], [3, 4, 2], [3, 4, 5], [3, 4, 6], [3, 2, 4], [3, 2, 5], [3, 2, 6], [4, 6, 2], [4, 6, 3], [4, 6, 5], [4, 5, 2], [4, 5, 3], [4, 5, 6], [4, 3, 2], [4, 3, 5], [4, 3, 6], [4, 2, 3], [4, 2, 5], [4, 2, 6], [5, 6, 2], [5, 6, 3], [5, 6, 4], [5, 4, 2], [5, 4, 3], [5, 4, 6], [5, 3, 2], [5, 3, 4], [5, 3, 6], [5, 2, 3], [5, 2, 4], [5, 2, 6], [6, 5, 2], [6, 5, 3], [6, 5, 4], [6, 4, 2], [6, 4, 3], [6, 4, 5], [6, 3, 2], [6, 3, 4], [6, 3, 5], [6, 2, 3], [6, 2, 4], [6, 2, 5]])
 @pytest.mark.parametrize("change",  [[2, 6], [2, 5], [2, 4], [2, 3], [2, 2], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2], [4, 6], [4, 5], [4, 4], [4, 3], [4, 2], [5, 6], [5, 5], [5, 4], [5, 3], [5, 2], [6, 6], [6, 5], [6, 4], [6, 3], [6, 2]])
 @pytest.mark.parametrize("oldProtector",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
@@ -573,7 +591,7 @@ def test_changeProtector_modifies_allprotectorsaddresses(deploy, combo, change, 
     deploy.voteForProtectorCandidate(accounts[9], {'from': accounts[combo[2]]})
     deploy.changeProtector(accounts[9], accounts[oldProtector], {'from': accounts[change[0]]})
     assert deploy.allprotectorsaddresses(oldProtector - 2) == accounts[9]
-
+@pytest.mark.skip
 @pytest.mark.parametrize("combo", [[2, 6, 3], [2, 6, 4], [2, 6, 5], [2, 5, 3], [2, 5, 4], [2, 5, 6], [2, 4, 3], [2, 4, 5], [2, 4, 6], [2, 3, 4], [2, 3, 5], [2, 3, 6], [3, 6, 2], [3, 6, 4], [3, 6, 5], [3, 5, 2], [3, 5, 4], [3, 5, 6], [3, 4, 2], [3, 4, 5], [3, 4, 6], [3, 2, 4], [3, 2, 5], [3, 2, 6], [4, 6, 2], [4, 6, 3], [4, 6, 5], [4, 5, 2], [4, 5, 3], [4, 5, 6], [4, 3, 2], [4, 3, 5], [4, 3, 6], [4, 2, 3], [4, 2, 5], [4, 2, 6], [5, 6, 2], [5, 6, 3], [5, 6, 4], [5, 4, 2], [5, 4, 3], [5, 4, 6], [5, 3, 2], [5, 3, 4], [5, 3, 6], [5, 2, 3], [5, 2, 4], [5, 2, 6], [6, 5, 2], [6, 5, 3], [6, 5, 4], [6, 4, 2], [6, 4, 3], [6, 4, 5], [6, 3, 2], [6, 3, 4], [6, 3, 5], [6, 2, 3], [6, 2, 4], [6, 2, 5]])
 @pytest.mark.parametrize("change",  [[2, 6], [2, 5], [2, 4], [2, 3], [2, 2], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2], [4, 6], [4, 5], [4, 4], [4, 3], [4, 2], [5, 6], [5, 5], [5, 4], [5, 3], [5, 2], [6, 6], [6, 5], [6, 4], [6, 3], [6, 2]])
 @pytest.mark.parametrize("oldProtector",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
@@ -584,7 +602,7 @@ def test_changeProtector_old_candidates_0(deploy, combo, change, oldProtector):
     deploy.voteForProtectorCandidate(accounts[9], {'from': accounts[combo[2]]})
     deploy.changeProtector(accounts[9], accounts[oldProtector], {'from': accounts[change[0]]})
     assert deploy.candidatesChange(accounts[protectorOwner]) == 0
-
+@pytest.mark.skip
 @pytest.mark.parametrize("combo", [[2, 6, 3], [2, 6, 4], [2, 6, 5], [2, 5, 3], [2, 5, 4], [2, 5, 6], [2, 4, 3], [2, 4, 5], [2, 4, 6], [2, 3, 4], [2, 3, 5], [2, 3, 6], [3, 6, 2], [3, 6, 4], [3, 6, 5], [3, 5, 2], [3, 5, 4], [3, 5, 6], [3, 4, 2], [3, 4, 5], [3, 4, 6], [3, 2, 4], [3, 2, 5], [3, 2, 6], [4, 6, 2], [4, 6, 3], [4, 6, 5], [4, 5, 2], [4, 5, 3], [4, 5, 6], [4, 3, 2], [4, 3, 5], [4, 3, 6], [4, 2, 3], [4, 2, 5], [4, 2, 6], [5, 6, 2], [5, 6, 3], [5, 6, 4], [5, 4, 2], [5, 4, 3], [5, 4, 6], [5, 3, 2], [5, 3, 4], [5, 3, 6], [5, 2, 3], [5, 2, 4], [5, 2, 6], [6, 5, 2], [6, 5, 3], [6, 5, 4], [6, 4, 2], [6, 4, 3], [6, 4, 5], [6, 3, 2], [6, 3, 4], [6, 3, 5], [6, 2, 3], [6, 2, 4], [6, 2, 5]])
 @pytest.mark.parametrize("change",  [[2, 6], [2, 5], [2, 4], [2, 3], [2, 2], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2], [4, 6], [4, 5], [4, 4], [4, 3], [4, 2], [5, 6], [5, 5], [5, 4], [5, 3], [5, 2], [6, 6], [6, 5], [6, 4], [6, 3], [6, 2]])
 @pytest.mark.parametrize("oldProtector",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
