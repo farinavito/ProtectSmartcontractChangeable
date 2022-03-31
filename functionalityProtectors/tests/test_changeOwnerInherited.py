@@ -580,12 +580,12 @@ def test_changeProtector_2nd_require_different_voters_2votes(deploy, combo, oldP
         deploy.changeProtector(accounts[9], accounts[oldProtector], {'from': accounts[combo[1]]})
     except Exception as e:
         assert e.message[50:] == "Not enough protectors agree with this address"
-@pytest.mark.skip
+
 @pytest.mark.parametrize("combo", [[2, 6, 3], [2, 6, 4], [2, 6, 5], [2, 5, 3], [2, 5, 4], [2, 5, 6], [2, 4, 3], [2, 4, 5], [2, 4, 6], [2, 3, 4], [2, 3, 5], [2, 3, 6], [3, 6, 2], [3, 6, 4], [3, 6, 5], [3, 5, 2], [3, 5, 4], [3, 5, 6], [3, 4, 2], [3, 4, 5], [3, 4, 6], [3, 2, 4], [3, 2, 5], [3, 2, 6], [4, 6, 2], [4, 6, 3], [4, 6, 5], [4, 5, 2], [4, 5, 3], [4, 5, 6], [4, 3, 2], [4, 3, 5], [4, 3, 6], [4, 2, 3], [4, 2, 5], [4, 2, 6], [5, 6, 2], [5, 6, 3], [5, 6, 4], [5, 4, 2], [5, 4, 3], [5, 4, 6], [5, 3, 2], [5, 3, 4], [5, 3, 6], [5, 2, 3], [5, 2, 4], [5, 2, 6], [6, 5, 2], [6, 5, 3], [6, 5, 4], [6, 4, 2], [6, 4, 3], [6, 4, 5], [6, 3, 2], [6, 3, 4], [6, 3, 5], [6, 2, 3], [6, 2, 4], [6, 2, 5]])
 @pytest.mark.parametrize("change",  [[2, 6], [2, 5], [2, 4], [2, 3], [2, 2], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2], [4, 6], [4, 5], [4, 4], [4, 3], [4, 2], [5, 6], [5, 5], [5, 4], [5, 3], [5, 2], [6, 6], [6, 5], [6, 4], [6, 3], [6, 2]])
 @pytest.mark.parametrize("oldProtector",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 def test_changeProtector_modifies_allprotectorsaddresses(deploy, combo, change, oldProtector):
-    '''Checking if the protector in allprotectorsaddresses is changed to the new address '''
+    '''Checking if the protector in allprotectorsaddresses is changed to the new address'''
     deploy.voteForProtectorCandidate(accounts[9], {'from': accounts[combo[0]]})
     deploy.voteForProtectorCandidate(accounts[9], {'from': accounts[combo[1]]})
     deploy.voteForProtectorCandidate(accounts[9], {'from': accounts[combo[2]]})
@@ -596,7 +596,7 @@ def test_changeProtector_modifies_allprotectorsaddresses(deploy, combo, change, 
 @pytest.mark.parametrize("change",  [[2, 6], [2, 5], [2, 4], [2, 3], [2, 2], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2], [4, 6], [4, 5], [4, 4], [4, 3], [4, 2], [5, 6], [5, 5], [5, 4], [5, 3], [5, 2], [6, 6], [6, 5], [6, 4], [6, 3], [6, 2]])
 @pytest.mark.parametrize("oldProtector",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 def test_changeProtector_old_candidates_0(deploy, combo, change, oldProtector):
-    '''Checking if the old candidateChange for the protector is 0 '''
+    '''Checking if the old candidateChange for the protector is 0'''
     deploy.voteForProtectorCandidate(accounts[9], {'from': accounts[combo[0]]})
     deploy.voteForProtectorCandidate(accounts[9], {'from': accounts[combo[1]]})
     deploy.voteForProtectorCandidate(accounts[9], {'from': accounts[combo[2]]})
