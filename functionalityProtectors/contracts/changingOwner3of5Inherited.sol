@@ -2,11 +2,10 @@
 pragma solidity 0.8.11;
 
 /// @title 3 or more out of 5 protectors can change the owner
-// change the inherited addresses
 //import "https://github.com/farinavito/ProtectSmartcontractChangeable/blob/main/initializingProtectors/contracts/changingOwner3of5.sol";
 import "farinavito/ProtectSmartcontractChangeable@1.0.0/initializingProtectors/contracts/changingOwner3of5.sol";
 
-
+// change the inherited addresses
 contract ChangingOwnerInherited is ChangingOwner(0x33A4622B82D4c04a53e170c638B944ce27cffce3, 0x0063046686E46Dc6F15918b61AE2B121458534a5, 0x21b42413bA931038f35e7A5224FaDb065d297Ba3, 0x46C0a5326E643E4f71D3149d50B48216e174Ae84, 0x807c47A89F720fe4Ee9b8343c286Fc886f43191b, 0x844ec86426F076647A5362706a04570A5965473B){
     /// @notice Only the smartContractOwner can access
     modifier onlySmartcontractOwner(){
