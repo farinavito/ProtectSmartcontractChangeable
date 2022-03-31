@@ -591,7 +591,7 @@ def test_changeProtector_modifies_allprotectorsaddresses(deploy, combo, change, 
     deploy.voteForProtectorCandidate(accounts[9], {'from': accounts[combo[2]]})
     deploy.changeProtector(accounts[9], accounts[oldProtector], {'from': accounts[change[0]]})
     assert deploy.allprotectorsaddresses(oldProtector - 2) == accounts[9]
-@pytest.mark.skip
+
 @pytest.mark.parametrize("combo", [[2, 6, 3], [2, 6, 4], [2, 6, 5], [2, 5, 3], [2, 5, 4], [2, 5, 6], [2, 4, 3], [2, 4, 5], [2, 4, 6], [2, 3, 4], [2, 3, 5], [2, 3, 6], [3, 6, 2], [3, 6, 4], [3, 6, 5], [3, 5, 2], [3, 5, 4], [3, 5, 6], [3, 4, 2], [3, 4, 5], [3, 4, 6], [3, 2, 4], [3, 2, 5], [3, 2, 6], [4, 6, 2], [4, 6, 3], [4, 6, 5], [4, 5, 2], [4, 5, 3], [4, 5, 6], [4, 3, 2], [4, 3, 5], [4, 3, 6], [4, 2, 3], [4, 2, 5], [4, 2, 6], [5, 6, 2], [5, 6, 3], [5, 6, 4], [5, 4, 2], [5, 4, 3], [5, 4, 6], [5, 3, 2], [5, 3, 4], [5, 3, 6], [5, 2, 3], [5, 2, 4], [5, 2, 6], [6, 5, 2], [6, 5, 3], [6, 5, 4], [6, 4, 2], [6, 4, 3], [6, 4, 5], [6, 3, 2], [6, 3, 4], [6, 3, 5], [6, 2, 3], [6, 2, 4], [6, 2, 5]])
 @pytest.mark.parametrize("change",  [[2, 6], [2, 5], [2, 4], [2, 3], [2, 2], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2], [4, 6], [4, 5], [4, 4], [4, 3], [4, 2], [5, 6], [5, 5], [5, 4], [5, 3], [5, 2], [6, 6], [6, 5], [6, 4], [6, 3], [6, 2]])
 @pytest.mark.parametrize("oldProtector",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
@@ -602,7 +602,7 @@ def test_changeProtector_old_candidates_0(deploy, combo, change, oldProtector):
     deploy.voteForProtectorCandidate(accounts[9], {'from': accounts[combo[2]]})
     deploy.changeProtector(accounts[9], accounts[oldProtector], {'from': accounts[change[0]]})
     assert deploy.candidatesChange(accounts[protectorOwner]) == 0
-@pytest.mark.skip
+
 @pytest.mark.parametrize("combo", [[2, 6, 3], [2, 6, 4], [2, 6, 5], [2, 5, 3], [2, 5, 4], [2, 5, 6], [2, 4, 3], [2, 4, 5], [2, 4, 6], [2, 3, 4], [2, 3, 5], [2, 3, 6], [3, 6, 2], [3, 6, 4], [3, 6, 5], [3, 5, 2], [3, 5, 4], [3, 5, 6], [3, 4, 2], [3, 4, 5], [3, 4, 6], [3, 2, 4], [3, 2, 5], [3, 2, 6], [4, 6, 2], [4, 6, 3], [4, 6, 5], [4, 5, 2], [4, 5, 3], [4, 5, 6], [4, 3, 2], [4, 3, 5], [4, 3, 6], [4, 2, 3], [4, 2, 5], [4, 2, 6], [5, 6, 2], [5, 6, 3], [5, 6, 4], [5, 4, 2], [5, 4, 3], [5, 4, 6], [5, 3, 2], [5, 3, 4], [5, 3, 6], [5, 2, 3], [5, 2, 4], [5, 2, 6], [6, 5, 2], [6, 5, 3], [6, 5, 4], [6, 4, 2], [6, 4, 3], [6, 4, 5], [6, 3, 2], [6, 3, 4], [6, 3, 5], [6, 2, 3], [6, 2, 4], [6, 2, 5]])
 @pytest.mark.parametrize("change",  [[2, 6], [2, 5], [2, 4], [2, 3], [2, 2], [3, 6], [3, 5], [3, 4], [3, 3], [3, 2], [4, 6], [4, 5], [4, 4], [4, 3], [4, 2], [5, 6], [5, 5], [5, 4], [5, 3], [5, 2], [6, 6], [6, 5], [6, 4], [6, 3], [6, 2]])
 @pytest.mark.parametrize("oldProtector",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
