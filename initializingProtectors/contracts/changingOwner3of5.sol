@@ -18,7 +18,7 @@ contract ChangingOwner {
     mapping (address => mapping(address => bool)) public alreadyVotedChange;
 
     /// @notice Address of the owner
-    address public smartContractOwner;
+    address public smartcontractOwner;
 
     /// @notice Storing all protectors
     address[] public allprotectorsaddresses;
@@ -34,7 +34,7 @@ contract ChangingOwner {
         address _protector4, 
         address _protector5 
     ){
-        smartContractOwner = _smartContractOwner;
+        smartcontractOwner = _smartContractOwner;
 
         allprotectorsaddresses.push(_protector1);
         allprotectorsaddresses.push(_protector2);
