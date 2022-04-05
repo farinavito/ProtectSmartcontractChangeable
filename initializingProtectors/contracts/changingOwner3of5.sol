@@ -48,12 +48,6 @@ contract ChangingOwner {
         }
     }
 
-    /// @notice Only the smartContractOwner can access
-    modifier onlySmartcontractOwner(){
-        require(smartcontractOwner == msg.sender, "You are not the owner");
-        _;
-    }
-
     /// @notice Checking if the input address is the protector
     function checkWhichProtector(address _address) internal view returns(uint8 _i){
         for (uint8 i = 0; i < 5; i++){
