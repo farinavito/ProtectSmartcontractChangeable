@@ -42,7 +42,7 @@ contract ChangingOwner {
         allprotectorsaddresses.push(_protector4);
         allprotectorsaddresses.push(_protector5);
 
-    for (uint256 i = 1; i <= 5; i++){
+    for (uint8 i = 1; i <= 5; i++){
             candidates[_smartContractOwner] += 1;
             alreadyVoted[allprotectorsaddresses[i - 1]][_smartContractOwner] = true;
         }
@@ -55,8 +55,8 @@ contract ChangingOwner {
     }
 
     /// @notice Checking if the input address is the protector
-    function checkWhichProtector(address _address) internal view returns(uint256 _i){
-        for (uint256 i = 0; i < 5; i++){
+    function checkWhichProtector(address _address) internal view returns(uint8 _i){
+        for (uint8 i = 0; i < 5; i++){
             if (allprotectorsaddresses[i] == _address){
                 return i;
             } else if (i != 4){
@@ -73,7 +73,7 @@ contract ChangingOwner {
         require(candidates[_nextInline] >= 3, "Not enough protectors agree with this address");
         //old values to zero and false
         candidates[smartcontractOwner] = 0;
-        for (uint256 i = 0; i < 5; i++){
+        for (uint8 i = 0; i < 5; i++){
             alreadyVoted[allprotectorsaddresses[i]][smartcontractOwner] = false;
         }
         //change the owner
@@ -98,7 +98,7 @@ contract ChangingOwner {
   
     /// @notice Returning all addresses of protectors
     function returnProtectors() external {
-        for (uint256 i = 0; i < 5; i++){
+        for (uint8 i = 0; i < 5; i++){
             emit showAllProtectors(allprotectorsaddresses[i]);
         }
     }
@@ -110,7 +110,7 @@ contract ChangingOwner {
         require(candidatesChange[_newAddress] >= 3, "Not enough protectors agree with this address");
         //old values to zero and false
         candidates[_oldAddress] = 0;
-        for (uint256 i = 0; i < 5; i++){
+        for (uint8 i = 0; i < 5; i++){
             alreadyVotedChange[allprotectorsaddresses[i]][_oldAddress] = false;
         }
         //change the protector
@@ -121,7 +121,7 @@ contract ChangingOwner {
     function voteForProtectorCandidate(address _nextInLine) external {
         checkWhichProtector(msg.sender);
         require(alreadyVotedChange[msg.sender][_nextInLine] == false, "You have entered your vote");
-        for (uint256 i = 0; i < 5; i++){
+        for (uint8 i = 0; i < 5; i++){
             require(allprotectorsaddresses[i] != _nextInLine, "This protector already exsists");
         }
         alreadyVotedChange[msg.sender][_nextInLine] = true;
