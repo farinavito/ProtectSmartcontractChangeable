@@ -21,7 +21,7 @@ contract ChangingOwner {
     address public smartcontractOwner;
 
     /// @notice Storing all protectors
-    address[] public allprotectorsaddresses;
+    address[] internal allprotectorsaddresses;
 
     /// @notice Emit all the addresses of the protectors
     event showAllProtectors(address indexed _address);
