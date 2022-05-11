@@ -13,12 +13,12 @@ VISUAL REPRESENTATION
 
 
 At the deployment we need to initialize:
-    *protector 1
-    *protector 2
-    3) protector 3
-    4) protector 4
-    5) protector 5
-    6) smartcontractOwner
+        1) protector 1
+        2) protector 2
+        3) protector 3
+        4) protector 4
+        5) protector 5
+        6) smartcontractOwner
 
     
 FUNCTIONS OF DIFFERENT ADDRESS
