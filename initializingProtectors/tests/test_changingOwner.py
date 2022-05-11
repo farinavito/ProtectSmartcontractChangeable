@@ -256,6 +256,16 @@ def test_checkWhichProtector_changeOwner_old_address(deploy, Owner):
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
     assert deploy.smartcontractOwner(accounts[protectorOwner]) == False
 
+@pytest.mark.parametrize("other_accounts", [2, 3, 4, 5, 6, 7, 8])
+@pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
+def test_checkWhichProtector_changeOwner_old_address(deploy, Owner, other_accounts):
+    '''Checking if the old address is changed to false'''
+    deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector3]})
+    deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector4]})
+    deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector5]})
+    deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
+    assert deploy.smartcontractOwner(accounts[other_accounts]) == False
+
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 def test_checkWhichProtector_changeOwner_newOwner(deploy, Owner):
     '''Checking if the newOwner is changed'''
