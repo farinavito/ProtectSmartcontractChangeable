@@ -13,8 +13,8 @@ VISUAL REPRESENTATION
 
 
 At the deployment we need to initialize:
-    1) protector 1
-    2) protector 2
+    *protector 1
+    *protector 2
     3) protector 3
     4) protector 4
     5) protector 5
