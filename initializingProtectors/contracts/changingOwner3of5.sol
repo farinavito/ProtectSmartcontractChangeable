@@ -17,8 +17,11 @@ contract ChangingOwner {
     /// @notice Adding votes for new protectors candidates by protectors
     mapping (address => mapping(address => bool)) public alreadyVotedChange;
 
-    /// @notice Address of the owner
-    address public smartcontractOwner;
+    /// @notice Storing the address of the current owner, so the contract inheriting this one, will be able to call it
+    mapping (address => bool) public smartcontractOwner;
+
+    /// @notice Address of the current owner
+    address public newOwner;
 
     /// @notice Storing all protectors
     address[] internal allprotectorsaddresses;
@@ -34,7 +37,8 @@ contract ChangingOwner {
         address _protector4, 
         address _protector5 
     ){
-        smartcontractOwner = _smartContractOwner;
+        newOwner = _smartContractOwner;
+        smartcontractOwner[_smartContractOwner] = true;
 
         allprotectorsaddresses.push(_protector1);
         allprotectorsaddresses.push(_protector2);
@@ -66,12 +70,15 @@ contract ChangingOwner {
         checkWhichProtector(msg.sender);
         require(candidates[_nextInline] >= 3, "Not enough protectors agree with this address");
         //old values to zero and false
-        candidates[smartcontractOwner] = 0;
+        candidates[newOwner] = 0;
         for (uint8 i = 0; i < 5; i++){
-            alreadyVoted[allprotectorsaddresses[i]][smartcontractOwner] = false;
+            alreadyVoted[allprotectorsaddresses[i]][newOwner] = false;
         }
+        //deleting the previous owner
+        smartcontractOwner[newOwner] = false;
         //change the owner
-        smartcontractOwner = _nextInline;
+        smartcontractOwner[_nextInline] = true;
+        newOwner = _nextInline;
     }
 
     /// @notice Voting for candidates by protectors
