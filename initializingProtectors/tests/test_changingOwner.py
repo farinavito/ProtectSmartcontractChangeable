@@ -60,10 +60,13 @@ def test_alreadyvoted_protector7(deploy):
     '''check if protector7 will fail for already voted when initialize'''
     assert deploy.alreadyVoted(accounts[protectorOwner], accounts[protectorOwner]) == False
 
-
 def test_smartContractOwner(deploy):
     '''checking if the smartContractOwner is initialize'''
-    assert deploy.smartcontractOwner() == accounts[protectorOwner]
+    assert deploy.smartcontractOwner(accounts[protectorOwner]) == True
+
+def test_newOwner(deploy):
+    '''check if newOwner is initialize properly'''
+    assert deploy.newOwner() == accounts[protectorOwner]
 
 @pytest.mark.parametrize("protector",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 def test_candidates_initialized_addressProtector(deploy, protector):
@@ -222,7 +225,7 @@ def test_checkWhichProtector_changeOwner_true_part1(deploy, protector, Owner):
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector2]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartcontractOwner() == accounts[9]
+    assert deploy.smartcontractOwner(accounts[9]) == True
 
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 @pytest.mark.parametrize("protector",  [addressProtector1, addressProtector2])
@@ -233,7 +236,7 @@ def test_checkWhichProtector_changeOwner_true_part2(deploy, Owner, protector, pr
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector2]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartcontractOwner() == accounts[9]
+    assert deploy.smartcontractOwner(accounts[9]) == True
 
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 def test_checkWhichProtector_changeOwner_true_part3(deploy, Owner):
@@ -242,7 +245,25 @@ def test_checkWhichProtector_changeOwner_true_part3(deploy, Owner):
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector4]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector5]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartcontractOwner() == accounts[9]
+    assert deploy.smartcontractOwner(accounts[9]) == True
+
+@pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
+def test_checkWhichProtector_changeOwner_old_address(deploy, Owner):
+    '''Checking if the old address is changed to false'''
+    deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector3]})
+    deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector4]})
+    deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector5]})
+    deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
+    assert deploy.smartcontractOwner(accounts[protectorOwner]) == False
+
+@pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
+def test_checkWhichProtector_changeOwner_newOwner(deploy, Owner):
+    '''Checking if the newOwner is changed'''
+    deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector3]})
+    deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector4]})
+    deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector5]})
+    deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
+    assert deploy.newOwner() == accounts[9]
 
 @pytest.mark.parametrize("protector",  [addressProtector3, addressProtector4, addressProtector5])
 @pytest.mark.parametrize("non_protector",  [7, 8, protectorOwner])
@@ -375,7 +396,7 @@ def test_changeowner_success_part1(deploy, Owner, protector):
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector2]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartcontractOwner() == accounts[9]
+    assert deploy.smartcontractOwner(accounts[9]) == True
 
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 @pytest.mark.parametrize("protector",  [addressProtector1, addressProtector2])
@@ -386,7 +407,7 @@ def test_changeowner_success_part2(deploy, Owner, protector, protector2):
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[protector2]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartcontractOwner() == accounts[9]
+    assert deploy.smartcontractOwner(accounts[9]) == True
 
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 def test_changeowner_success_part3(deploy, Owner):
@@ -395,7 +416,7 @@ def test_changeowner_success_part3(deploy, Owner):
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector4]})
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector5]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
-    assert deploy.smartcontractOwner() == accounts[9]
+    assert deploy.smartcontractOwner(accounts[9]) == True
 
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 @pytest.mark.parametrize("protector",  [addressProtector3, addressProtector4, addressProtector5])
