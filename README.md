@@ -43,3 +43,12 @@ In your smart contract write:
 Than you can use it as: 
 
     require(accessingProtectors.smartcontractOwner(), "You aren't the owner");
+    
+CHANGE ALL PROTECTORS AND THE OWNER
+-----------------------------------
+
+    1) At least 3 different protectors have to vote for 5 different addresses, which will replace protectors.  They do this by calling voteForProtectorCandidate.
+    2) At least 3 different protectors have to vote for a different address, which will replace the owner. They do this by calling voteForOwnerCandidate.
+    3) Change the protectors. The best way to do this is by inserting the same address as a parameter in changeProtector as calling this function.
+    4) Change the owner. One of the protectors needs to call changeOwner.
+    5) You can change the owner first and protectors second. It doesn't matter. However, 5 new protector's addresses and a new owner's address have to have enough votes to be changed together.
