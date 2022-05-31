@@ -11,6 +11,13 @@ addressProtector3 = 4
 addressProtector4 = 5
 addressProtector5 = 6
 
+new_address_1 = accounts.add()
+new_address_2 = accounts.add()
+new_address_3 = accounts.add()
+new_address_4 = accounts.add()
+new_address_5 = accounts.add()
+new_address_6 = accounts.add()
+
 numCombo = 0
 
 @pytest.fixture()
@@ -255,7 +262,7 @@ def test_checkWhichProtector_changeOwner_old_address(deploy, Owner):
     deploy.voteForOwnerCandidate(accounts[9], {'from': accounts[addressProtector5]})
     deploy.changeOwner(accounts[9], {'from': accounts[Owner]})
     assert deploy.smartcontractOwner(accounts[protectorOwner]) == False
-@pytest.mark.aaa
+
 @pytest.mark.parametrize("other_accounts", [0, 2, 3, 4, 5, 6, 7, 8])
 @pytest.mark.parametrize("Owner",  [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
 def test_checkWhichProtector_changeOwner_old_address(deploy, Owner, other_accounts):
@@ -739,4 +746,538 @@ def test_removeVoteForProtectorCandidate_candidates_decrease(deploy, protector):
     assert deploy.candidatesChange(accounts[9]) == 0
 
 
+
+'''TEST CHANGING ALL PROTECTORS'''
+
+
+@pytest.mark.parametrize("_addresses", [new_address_1, new_address_2, new_address_3, new_address_4, new_address_5])
+def test_changing_everything_protector_1(deploy, _addresses):
+    '''checking if we can change the protector 1'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector4]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector5]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_5, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': accounts[_addresses]})
+    function_called = deploy.returnProtectors()
+    assert function_called.events[0][0]["_address"] == new_address_1
+
+@pytest.mark.parametrize("_addresses", [new_address_1, new_address_2, new_address_3, new_address_4, new_address_5])
+def test_changing_everything_protector_2(deploy, _addresses):
+    '''checking if we can change the protector 2'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector4]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector5]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_5, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': accounts[_addresses]})
+    function_called = deploy.returnProtectors()
+    assert function_called.events[1][0]["_address"] == new_address_2
+
+@pytest.mark.parametrize("_addresses", [new_address_1, new_address_2, new_address_3, new_address_4, new_address_5])
+def test_changing_everything_protector_3(deploy, _addresses):
+    '''checking if we can change the protector 3'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector4]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector5]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_5, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': accounts[_addresses]})
+    function_called = deploy.returnProtectors()
+    assert function_called.events[2][0]["_address"] == new_address_3
+
+@pytest.mark.parametrize("_addresses", [new_address_1, new_address_2, new_address_3, new_address_4, new_address_5])
+def test_changing_everything_protector_4(deploy, _addresses):
+    '''checking if we can change the protector 4'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector4]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector5]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_5, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': accounts[_addresses]})
+    function_called = deploy.returnProtectors()
+    assert function_called.events[3][0]["_address"] == new_address_4
+
+@pytest.mark.parametrize("_addresses", [new_address_1, new_address_2, new_address_3, new_address_4, new_address_5])
+def test_changing_everything_protector_5(deploy, _addresses):
+    '''checking if we can change the protector 5'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector4]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector5]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_5, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': accounts[_addresses]})
+    function_called = deploy.returnProtectors()
+    assert function_called.events[4][0]["_address"] == new_address_5
+
+@pytest.mark.parametrize("_addresses", [new_address_1, new_address_2, new_address_3, new_address_4, new_address_5])
+def test_changing_everything_owner(deploy, _addresses):
+    '''checking if we can change the owner'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_5, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': _addresses})
+    assert deploy.smartcontractOwner(new_address_6) == True
+
+@pytest.mark.parametrize("_addresses", [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
+def test_changing_everything_owner_2(deploy, _addresses):
+    '''checking if we can change the owner when we first change owner and then the protectors'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': accounts[_addresses]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_5, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    assert deploy.smartcontractOwner(new_address_6) == True
+
+@pytest.mark.parametrize("_addresses", [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
+def test_changing_everything_protector_1_case_2(deploy, _addresses):
+    '''checking if we can change the protector 1 when we first change owner and then the protectors'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': accounts[_addresses]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    function_called = deploy.returnProtectors()
+    assert function_called.events[0][0]["_address"] == new_address_1
+
+@pytest.mark.parametrize("_addresses", [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
+def test_changing_everything_protector_2_case_2(deploy, _addresses):
+    '''checking if we can change the protector 2 when we first change owner and then the protectors'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': accounts[_addresses]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    function_called = deploy.returnProtectors()
+    assert function_called.events[1][0]["_address"] == new_address_2
+
+@pytest.mark.parametrize("_addresses", [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
+def test_changing_everything_protector_3_case_2(deploy, _addresses):
+    '''checking if we can change the protector 3 when we first change owner and then the protectors'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': accounts[_addresses]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    function_called = deploy.returnProtectors()
+    assert function_called.events[2][0]["_address"] == new_address_3
+
+@pytest.mark.parametrize("_addresses", [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
+def test_changing_everything_protector_4_case_2(deploy, _addresses):
+    '''checking if we can change the protector 4 when we first change owner and then the protectors'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': accounts[_addresses]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    function_called = deploy.returnProtectors()
+    assert function_called.events[3][0]["_address"] == new_address_4
+
+@pytest.mark.parametrize("_addresses", [addressProtector1, addressProtector2, addressProtector3, addressProtector4, addressProtector5])
+def test_changing_everything_protector_5_case_2(deploy, _addresses):
+    '''checking if we can change the protector 5 when we first change owner and then the protectors'''
+    #first protector
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+    #second protector
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_2, {'from': accounts[addressProtector3]})
+    #third protector
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_3, {'from': accounts[addressProtector3]})
+    #forth protector
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_4, {'from': accounts[addressProtector3]})
+    #fifth protector
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_5, {'from': accounts[addressProtector3]})
+    #owner
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(new_address_6, {'from': accounts[addressProtector3]})
+    #change owner
+    deploy.changeOwner(new_address_6, {'from': accounts[_addresses]})
+    #change first protector
+    deploy.changeProtector(new_address_1, accounts[addressProtector1], {'from': accounts[addressProtector1]})
+    #change second protector
+    deploy.changeProtector(new_address_2, accounts[addressProtector2], {'from': accounts[addressProtector2]})
+    #change third protector
+    deploy.changeProtector(new_address_3, accounts[addressProtector3], {'from': accounts[addressProtector3]})
+    #change forth protector
+    deploy.changeProtector(new_address_4, accounts[addressProtector4], {'from': accounts[addressProtector4]})
+    #change fifth protector
+    deploy.changeProtector(new_address_5, accounts[addressProtector5], {'from': accounts[addressProtector5]})
+    function_called = deploy.returnProtectors()
+    assert function_called.events[4][0]["_address"] == new_address_5
+@pytest.mark.aaa
+def test_access_to_one_account(deploy):
+    '''Checking if we can change other protector if we have access to only one account'''
+    bad_account = accounts.add()
+    bad_account_2 = accounts.add()
+    #first protector
+    deploy.voteForProtectorCandidate(bad_account_2, {'from': accounts[addressProtector1]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
+    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+
+
+def test_ch_ow(deploy):
+    deploy.voteForOwnerCandidate(accounts[4], {'from': accounts[addressProtector1]})
+    deploy.voteForOwnerCandidate(accounts[4], {'from': accounts[addressProtector2]})
+    deploy.voteForOwnerCandidate(accounts[4], {'from': accounts[addressProtector3]})
+    #deploy.voteForOwnerCandidate(accounts[4], {'from': accounts[addressProtector4]})
+    #deploy.voteForOwnerCandidate(accounts[4], {'from': accounts[addressProtector5]})
+    deploy.changeOwner(accounts[4], {'from': accounts[addressProtector1]})
+    assert deploy.smartcontractOwner(accounts[4]) == True
 
