@@ -1272,12 +1272,5 @@ def test_access_to_one_account(deploy):
     deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
 
 
-def test_ch_ow(deploy):
-    deploy.voteForOwnerCandidate(accounts[4], {'from': accounts[addressProtector1]})
-    deploy.voteForOwnerCandidate(accounts[4], {'from': accounts[addressProtector2]})
-    deploy.voteForOwnerCandidate(accounts[4], {'from': accounts[addressProtector3]})
-    #deploy.voteForOwnerCandidate(accounts[4], {'from': accounts[addressProtector4]})
-    #deploy.voteForOwnerCandidate(accounts[4], {'from': accounts[addressProtector5]})
-    deploy.changeOwner(accounts[4], {'from': accounts[addressProtector1]})
-    assert deploy.smartcontractOwner(accounts[4]) == True
+
 
