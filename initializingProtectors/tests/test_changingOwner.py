@@ -1261,15 +1261,7 @@ def test_changing_everything_protector_5_case_2(deploy, _addresses):
     deploy.changeProtector(new_address_5, accounts[addressProtector5], {'from': accounts[addressProtector5]})
     function_called = deploy.returnProtectors()
     assert function_called.events[4][0]["_address"] == new_address_5
-@pytest.mark.aaa
-def test_access_to_one_account(deploy):
-    '''Checking if we can change other protector if we have access to only one account'''
-    bad_account = accounts.add()
-    bad_account_2 = accounts.add()
-    #first protector
-    deploy.voteForProtectorCandidate(bad_account_2, {'from': accounts[addressProtector1]})
-    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector2]})
-    deploy.voteForProtectorCandidate(new_address_1, {'from': accounts[addressProtector3]})
+
 
 
 
